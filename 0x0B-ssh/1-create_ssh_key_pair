@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
-# bash script that generates private key and public key pair
-ssh-keygen -P betty -f holberton -b 4096
+# Generating SSH key-pairs according to Task requirements
+
+ssh-keygen -t rsa -b 4096 -P betty -f school
