@@ -1,11 +1,9 @@
 #!/usr/bin/python3
 """
-A Script that, uses a REST API, for a given employee ID, returns
+A Script that, uses this REST API, for a given employee ID, returns
 information about his/her TODO list progress
-exporting data in the CSV format.
 """
 
-import csv
 import json
 import requests
 from sys import argv
@@ -23,7 +21,7 @@ if __name__ == "__main__":
     employeeName = sessionReq.get(nameURL)
 
     json_req = employee.json()
-    usr = employeeName.json()['username']
+    name = employeeName.json()['name']
 
     totalTasks = 0
 
@@ -31,9 +29,9 @@ if __name__ == "__main__":
         if done_tasks['completed']:
             totalTasks += 1
 
-    fileCSV = idEmp + '.csv'
+    print("Employee {} is done with tasks({}/{}):".
+          format(name, totalTasks, len(json_req)))
 
-    with open(fileCSV, "w", newline='') as csvfile:
-        write = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_ALL)
-        for i in json_req:
-            write.writerow([idEmp, usr, i.get('completed'), i.get('title')])
+    for done_tasks in json_req:
+        if done_tasks['completed']:
+            print("\t " + done_tasks.get('title'))
